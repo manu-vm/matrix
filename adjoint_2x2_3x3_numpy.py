@@ -1,22 +1,32 @@
-import numpy as np
+# To find adjoint of matrix
+def adjoint(matrix):
+    raw_matrix = len(matrix)
+    colume_matrix = len(matrix[0])
+    if (raw_matrix*colume_matrix)==4:
+        a,b =  matrix[1][1],matrix[0][1]*-1
+        c,d =  matrix[1][0]*-1,matrix[0][0]
+        ret = [[a,b],[c,d]]
+        return ret
+    if (raw_matrix*colume_matrix)==9:
+        a =  matrix[1][1]*matrix[2][2]-matrix[2][1]*matrix[1][2]
+        b = (matrix[0][1]*matrix[2][2]-matrix[2][1]*matrix[0][2])*-1
+        c =  matrix[0][1]*matrix[1][2]-matrix[1][1]*matrix[0][2]
+        
+        d = (matrix[1][0]*matrix[2][2]-matrix[2][0]*matrix[1][2])*-1
+        e =  matrix[0][0]*matrix[2][2]-matrix[2][0]*matrix[0][2]
+        f = (matrix[0][0]*matrix[1][2]-matrix[1][0]*matrix[0][2])*-1
+        
+        g =  matrix[1][0]*matrix[2][1]-matrix[2][0]*matrix[1][1]
+        h = (matrix[0][0]*matrix[2][1]-matrix[2][0]*matrix[0][1])*-1
+        i =  matrix[0][0]*matrix[1][1]-matrix[1][0]*matrix[0][1]
+        adj = [[a,b,c],[d,e,f],[g,h,i]]
+        return adj
 
-def cofactor(matrix, i, j):
-    """Compute the cofactor of the matrix at the given row and column."""
-    minor = np.delete(np.delete(matrix, i, 0), j, 1)
-    return (-1)**(i + j) * np.linalg.det(minor)
+A               = [[5,1,1],
+                   [1,2,1],
+                   [1,1,2]]
+printM(adjoint(A))
 
-def adjugate(matrix):
-    """Compute the adjugate of the matrix."""
-    adj = np.zeros(matrix.shape)
-    for i in range(matrix.shape[0]):
-        for j in range(matrix.shape[1]):
-            adj[j][i] = cofactor(matrix, i, j)  # Transposition is achieved by swapping i and j
-    return adj
-
-# Example
-A = np.array([[1, 2, 3],
-              [4, 5, 6],
-              [7, 8, 9]])
-
-adj_A = adjugate(A)
-print(adj_A)
+A  = [[1,2],
+      [3,4]]
+printM(adjoint(A))
